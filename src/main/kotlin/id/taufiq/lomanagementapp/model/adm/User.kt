@@ -1,7 +1,9 @@
-package id.taufiq.lomanagementapp.model
+package id.taufiq.lomanagementapp.model.adm
 
 import jakarta.persistence.*
 import org.hibernate.Hibernate
+import org.hibernate.annotations.JdbcTypeCode
+import org.hibernate.type.SqlTypes
 import java.util.*
 
 @Entity
@@ -9,10 +11,11 @@ data class User(
 
     @Id
     @GeneratedValue(strategy = GenerationType.UUID)
+    @JdbcTypeCode(SqlTypes.VARCHAR)
     @Column(name = "id", nullable = false)
     var id: UUID? = null,
 
-    @Column(nullable = false)
+    @Column(nullable = false, unique = true)
     var username: String? = null,
 
     @Column(nullable = false)

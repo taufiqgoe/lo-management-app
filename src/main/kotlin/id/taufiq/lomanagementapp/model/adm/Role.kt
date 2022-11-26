@@ -1,4 +1,4 @@
-package id.taufiq.lomanagementapp.model
+package id.taufiq.lomanagementapp.model.adm
 
 import jakarta.persistence.*
 import org.hibernate.Hibernate

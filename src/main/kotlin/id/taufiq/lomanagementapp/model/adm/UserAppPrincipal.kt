@@ -1,4 +1,4 @@
-package id.taufiq.lomanagementapp.model
+package id.taufiq.lomanagementapp.model.adm
 
 import org.springframework.security.core.GrantedAuthority
 import org.springframework.security.core.authority.SimpleGrantedAuthority
