@@ -14,7 +14,7 @@ data class Role(
     @Column(name = "id", nullable = false)
     var id: Int? = null,
 
-    @Column(nullable = false)
+    @Column(nullable = false, unique = true)
     var name: String? = null
 
 ) {

@@ -11,9 +11,16 @@ data class Program(
     @Column(name = "id", nullable = false)
     var id: Int? = null,
 
-    var name: String? = null
+    var name: String? = null,
+
+    @ManyToOne(optional = false)
+    @JoinColumn(name = "department_id", nullable = false)
+    var department: Department? = null
 
 ) {
+    @OneToMany(mappedBy = "program", orphanRemoval = true)
+    var courses: MutableCollection<Course> = mutableListOf()
+
     @OneToMany(mappedBy = "program", orphanRemoval = true)
     var programCurricula: MutableCollection<ProgramCurriculum> = mutableListOf()
 

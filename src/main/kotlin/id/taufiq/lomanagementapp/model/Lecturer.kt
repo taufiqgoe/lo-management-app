@@ -22,5 +22,5 @@ data class Lecturer(
 
 ) {
     @OneToMany(mappedBy = "lecturer", orphanRemoval = true)
-    open var lecturerClassrooms: MutableCollection<LecturerClassroom> = mutableListOf()
+    var lecturerClassrooms: MutableCollection<LecturerClassroom> = mutableListOf()
 }

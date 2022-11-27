@@ -12,4 +12,7 @@ data class Department(
 
     var name: String? = null
 
-)
+) {
+    @OneToMany(mappedBy = "department", orphanRemoval = true)
+    var programs: MutableCollection<Program> = mutableListOf()
+}

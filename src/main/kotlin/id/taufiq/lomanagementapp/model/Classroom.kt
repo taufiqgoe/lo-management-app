@@ -12,7 +12,11 @@ data class Classroom(
     @Column(name = "id", nullable = false)
     var id: Int? = null,
 
-    var name: String? = null
+    var name: String? = null,
+
+    @ManyToOne(optional = false)
+    @JoinColumn(name = "course_id", nullable = false)
+    var course: Course? = null
 
 ) {
     @OneToMany(mappedBy = "classroom", orphanRemoval = true)
@@ -22,5 +26,5 @@ data class Classroom(
     var studentClassrooms: MutableCollection<StudentClassroom> = mutableListOf()
 
     @OneToMany(mappedBy = "classroom", orphanRemoval = true)
-    open var lecturerClassrooms: MutableCollection<LecturerClassroom> = mutableListOf()
+    var lecturerClassrooms: MutableCollection<LecturerClassroom> = mutableListOf()
 }
