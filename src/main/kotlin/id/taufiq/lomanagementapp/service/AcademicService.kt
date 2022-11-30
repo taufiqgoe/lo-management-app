@@ -16,7 +16,8 @@ class AcademicService(
     private val courseRepository: CourseRepository,
     private val classroomRepository: ClassroomRepository,
     private val curriculumRepository: CurriculumRepository,
-    private val programCurriculumRepository: ProgramCurriculumRepository
+    private val programCurriculumRepository: ProgramCurriculumRepository,
+    private val assessmentRepository: AssessmentRepository
 ) {
 
     //
@@ -139,10 +140,30 @@ class AcademicService(
         return programCurriculumDtoMapAndSave(programCurriculumDto)
     }
 
-    fun deleteProgramCurriculum(programCurriculumId: Int): ProgramCurriculumDto {
-        val programCurriculum = programCurriculumRepository.findById(programCurriculumId)
-            .orElseThrow { NotFoundException("Program curriculum not found") }
-        return mapper.map(programCurriculum, ProgramCurriculumDto::class.java)
+    fun deleteProgramCurriculum(programCurriculumId: Int) {
+        programCurriculumRepository.deleteById(programCurriculumId)
+    }
+
+    //
+    // ASSESSMENT
+
+    fun createAssessment(assessmentDto: AssessmentDto): AssessmentDto {
+        assessmentDto.id = null
+        return assessmentDtoMapAndSave(assessmentDto)
+    }
+
+    fun updateAssessment(assessmentDto: AssessmentDto): AssessmentDto {
+        return assessmentDtoMapAndSave(assessmentDto)
+    }
+
+    fun findAssessment(assessmentId: Int): AssessmentDto {
+        val assessment =
+            assessmentRepository.findById(assessmentId).orElseThrow { NotFoundException("Assessment not found") }
+        return mapper.map(assessment, AssessmentDto::class.java)
+    }
+
+    fun deleteAssessment(assessmentId: Int) {
+        assessmentRepository.deleteById(assessmentId)
     }
 
     //
@@ -174,8 +195,13 @@ class AcademicService(
     }
 
     private fun programCurriculumDtoMapAndSave(programCurriculumDto: ProgramCurriculumDto): ProgramCurriculumDto {
-        val programCUrriculum = mapper.map(programCurriculumDto, ProgramCurriculum::class.java)
-        return mapper.map(programCurriculumRepository.save(programCUrriculum), ProgramCurriculumDto::class.java)
+        val programCurriculum = mapper.map(programCurriculumDto, ProgramCurriculum::class.java)
+        return mapper.map(programCurriculumRepository.save(programCurriculum), ProgramCurriculumDto::class.java)
+    }
+
+    private fun assessmentDtoMapAndSave(assessmentDto: AssessmentDto): AssessmentDto {
+        val assessment = mapper.map(assessmentDto, Assessment::class.java)
+        return mapper.map(assessmentRepository.save(assessment), AssessmentDto::class.java)
     }
 
 }

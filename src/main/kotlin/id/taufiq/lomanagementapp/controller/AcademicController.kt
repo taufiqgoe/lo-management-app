@@ -121,8 +121,28 @@ class AcademicController(
     }
 
     @DeleteMapping("program-curriculum/{programCurriculumId}")
-    fun deleteProgramCurriculum(@PathVariable programCurriculumId: Int): ProgramCurriculumDto {
+    fun deleteProgramCurriculum(@PathVariable programCurriculumId: Int) {
         return service.deleteProgramCurriculum(programCurriculumId)
+    }
+
+    @PostMapping("assessment")
+    fun createAssessment(@RequestBody assessmentDto: AssessmentDto): AssessmentDto {
+        return service.createAssessment(assessmentDto)
+    }
+
+    @PutMapping("assessment")
+    fun updateAssessment(@RequestBody assessmentDto: AssessmentDto): AssessmentDto {
+        return service.updateAssessment(assessmentDto)
+    }
+
+    @GetMapping("assessment/{assessmentId}")
+    fun findAssessment(assessmentId: Int): AssessmentDto {
+        return service.findAssessment(assessmentId)
+    }
+
+    @DeleteMapping("assessment/{assessmentId}")
+    fun deleteAssessment(@PathVariable assessmentId: Int) {
+        service.deleteAssessment(assessmentId)
     }
 
 }
