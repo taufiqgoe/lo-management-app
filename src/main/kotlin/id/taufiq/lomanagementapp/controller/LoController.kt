@@ -4,6 +4,7 @@ import id.taufiq.lomanagementapp.dto.lo.AssessmentCloDto
 import id.taufiq.lomanagementapp.dto.lo.CourseLearningOutcomeDto
 import id.taufiq.lomanagementapp.dto.lo.PloCloDto
 import id.taufiq.lomanagementapp.dto.lo.ProgramLearningOutcomeDto
+import id.taufiq.lomanagementapp.dto.op.LoScoreDto
 import id.taufiq.lomanagementapp.service.LoService
 import org.springframework.web.bind.annotation.*
 
@@ -33,6 +34,16 @@ class LoController(
         service.deletePlo(ploId)
     }
 
+    @GetMapping("plo/average-score")
+    fun findPloAverageScore(ploId: Int): LoScoreDto<ProgramLearningOutcomeDto> {
+        return service.findPloAverageScore(ploId)
+    }
+
+    @GetMapping("plo/course-average-score")
+    fun findCoursePloAverageScore(courseId: Int): List<LoScoreDto<ProgramLearningOutcomeDto>> {
+        return service.findCoursePloAverageScore(courseId)
+    }
+
     @PostMapping("clo")
     fun createClo(@RequestBody cloDto: CourseLearningOutcomeDto): CourseLearningOutcomeDto {
         return service.createClo(cloDto)
@@ -51,6 +62,16 @@ class LoController(
     @DeleteMapping("clo/{cloId}")
     fun deleteClo(@PathVariable cloId: Int) {
         return service.deleteClo(cloId)
+    }
+
+    @GetMapping("clo/average-score")
+    fun findCloAverageScore(cloId: Int): LoScoreDto<CourseLearningOutcomeDto> {
+        return service.findCloAverageScore(cloId)
+    }
+
+    @GetMapping("clo/course-average-score")
+    fun findCourseCloAverageScore(courseId: Int): List<LoScoreDto<CourseLearningOutcomeDto>> {
+        return service.findCourseCloAverageScore(courseId)
     }
 
     @PostMapping("plo-clo")

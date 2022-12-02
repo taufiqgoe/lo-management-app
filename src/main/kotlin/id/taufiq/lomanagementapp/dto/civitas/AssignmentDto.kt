@@ -9,5 +9,5 @@ data class AssignmentDto(
     var id: Int? = null,
     var studentClassroomId: Int? = null,
     var assessmentId: Int? = null,
-    var score: Float? = null
+    var score: Double? = null
 ) : Serializable

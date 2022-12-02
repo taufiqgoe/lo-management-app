@@ -20,6 +20,6 @@ data class Assignment(
     var assessment: Assessment? = null,
 
     @Column(nullable = false)
-    var score: Float? = null
+    var score: Double? = null
 
 )
