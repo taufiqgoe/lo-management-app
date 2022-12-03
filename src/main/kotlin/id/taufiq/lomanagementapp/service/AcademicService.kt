@@ -6,6 +6,8 @@ import id.taufiq.lomanagementapp.model.*
 import id.taufiq.lomanagementapp.model.jointable.ProgramCurriculum
 import id.taufiq.lomanagementapp.repository.*
 import org.modelmapper.ModelMapper
+import org.springframework.data.domain.Page
+import org.springframework.data.domain.PageRequest
 import org.springframework.stereotype.Service
 
 @Service
@@ -42,6 +44,11 @@ class AcademicService(
         departmentRepository.deleteById(departmentId)
     }
 
+    fun findAllDepartment(page: Int, size: Int): Page<DepartmentDto> {
+        val departments = departmentRepository.findAll(PageRequest.of(page, size))
+        return departments.map { mapper.map(it, DepartmentDto::class.java) }
+    }
+
     //
     // PROGRAM
 
@@ -61,6 +68,11 @@ class AcademicService(
 
     fun deleteProgram(programId: Int) {
         programRepository.deleteById(programId)
+    }
+
+    fun findAllProgram(page: Int, size: Int): Page<ProgramDto> {
+        val programs = programRepository.findAll(PageRequest.of(page, size))
+        return programs.map { mapper.map(it, ProgramDto::class.java) }
     }
 
     //
@@ -84,6 +96,11 @@ class AcademicService(
         courseRepository.deleteById(courseId)
     }
 
+    fun findAllCourseByProgramId(programId: Int, page: Int, size: Int): List<CourseDto> {
+        val courses = courseRepository.findByProgramId(programId, PageRequest.of(page, size))
+        return courses.map { mapper.map(it, CourseDto::class.java) }
+    }
+
     //
     // CLASSROOM
 
@@ -104,6 +121,11 @@ class AcademicService(
 
     fun deleteClassroom(classroomId: Int) {
         classroomRepository.deleteById(classroomId)
+    }
+
+    fun findAllClassroomByCourseId(courseId: Int, page: Int, size: Int): List<ClassroomDto> {
+        val classrooms = classroomRepository.findByCourseId(courseId, PageRequest.of(page, size))
+        return classrooms.map { mapper.map(it, ClassroomDto::class.java) }
     }
 
     //

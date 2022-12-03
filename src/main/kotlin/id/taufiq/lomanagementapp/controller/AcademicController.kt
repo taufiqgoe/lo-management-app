@@ -2,6 +2,7 @@ package id.taufiq.lomanagementapp.controller
 
 import id.taufiq.lomanagementapp.dto.*
 import id.taufiq.lomanagementapp.service.AcademicService
+import org.springframework.data.domain.Page
 import org.springframework.web.bind.annotation.*
 
 @RestController
@@ -30,6 +31,14 @@ class AcademicController(
         service.deleteDepartment(departmentId)
     }
 
+    @GetMapping("department/all")
+    fun findAllDepartment(
+        @RequestParam(defaultValue = "0") page: Int,
+        @RequestParam(defaultValue = "10") size: Int
+    ): Page<DepartmentDto> {
+        return service.findAllDepartment(page, size)
+    }
+
     @PostMapping("program")
     fun createProgram(@RequestBody programDto: ProgramDto): ProgramDto {
         return service.createProgram(programDto)
@@ -48,6 +57,14 @@ class AcademicController(
     @DeleteMapping("program/{programId}")
     fun deleteProgram(@PathVariable programId: Int) {
         service.deleteProgram(programId)
+    }
+
+    @GetMapping("program/all")
+    fun findAllProgram(
+        @RequestParam(defaultValue = "0") page: Int,
+        @RequestParam(defaultValue = "10") size: Int
+    ): Page<ProgramDto> {
+        return service.findAllProgram(page, size)
     }
 
     @PostMapping("course")
@@ -70,6 +87,15 @@ class AcademicController(
         service.deleteCourse(courseId)
     }
 
+    @GetMapping("course/all/by-program/{programId}")
+    fun findAllCourseByProgramId(
+        @PathVariable programId: Int,
+        @RequestParam(defaultValue = "0") page: Int,
+        @RequestParam(defaultValue = "10") size: Int
+    ): List<CourseDto> {
+        return service.findAllCourseByProgramId(programId, page, size)
+    }
+
     @PostMapping("classroom")
     fun createClassroom(@RequestBody classroomDto: ClassroomDto): ClassroomDto {
         return service.createClassroom(classroomDto)
@@ -88,6 +114,15 @@ class AcademicController(
     @DeleteMapping("classroom/{classroomId}")
     fun deleteClassroom(@PathVariable classroomId: Int) {
         service.deleteClassroom(classroomId)
+    }
+
+    @GetMapping("classroom/all/by-course/{courseId}")
+    fun findAllClassroomByCourseId(
+        @PathVariable courseId: Int,
+        @RequestParam(defaultValue = "0") page: Int,
+        @RequestParam(defaultValue = "10") size: Int
+    ): List<ClassroomDto> {
+        return service.findAllClassroomByCourseId(courseId, page, size)
     }
 
     @PostMapping("curriculum")

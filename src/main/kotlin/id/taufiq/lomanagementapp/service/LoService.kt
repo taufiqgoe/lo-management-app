@@ -22,8 +22,7 @@ class LoService(
     private val courseLearningOutcomeRepository: CourseLearningOutcomeRepository,
     private val ploCloRepository: PloCloRepository,
     private val assessmentCloRepository: AssessmentCloRepository,
-    private val assignmentRepository: AssignmentRepository,
-    private val courseRepository: CourseRepository
+    private val assignmentRepository: AssignmentRepository
 ) {
 
     //
@@ -144,9 +143,9 @@ class LoService(
         ploCloRepository.deleteById(ploCloId)
     }
 
-    fun findCoursePloClo(courseId: Int) {
+    fun findAllPloCloByCourseId(courseId: Int): List<PloCloDto> {
         val ploCloes = ploCloRepository.findByCourseLearningOutcomeCourseId(courseId)
-
+        return ploCloes.map { mapper.map(it, PloCloDto::class.java) }
     }
 
     //

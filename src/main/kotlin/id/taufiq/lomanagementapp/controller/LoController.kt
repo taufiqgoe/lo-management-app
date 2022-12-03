@@ -94,6 +94,11 @@ class LoController(
         service.deletePloClo(ploCloId)
     }
 
+    @DeleteMapping("plo-clo/all/by-course/{courseId}")
+    fun findAllPloCloByCourseId(@PathVariable courseId: Int): List<PloCloDto> {
+        return service.findAllPloCloByCourseId(courseId)
+    }
+
     @PostMapping("assessment-clo")
     fun createAssessmentClo(@RequestBody assessmentCloDto: AssessmentCloDto): AssessmentCloDto {
         return service.createAssessmentClo(assessmentCloDto)
