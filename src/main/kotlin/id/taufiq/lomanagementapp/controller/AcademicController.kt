@@ -92,7 +92,7 @@ class AcademicController(
         @PathVariable programId: Int,
         @RequestParam(defaultValue = "0") page: Int,
         @RequestParam(defaultValue = "10") size: Int
-    ): List<CourseDto> {
+    ): Page<CourseDto> {
         return service.findAllCourseByProgramId(programId, page, size)
     }
 
@@ -121,8 +121,17 @@ class AcademicController(
         @PathVariable courseId: Int,
         @RequestParam(defaultValue = "0") page: Int,
         @RequestParam(defaultValue = "10") size: Int
-    ): List<ClassroomDto> {
+    ): Page<ClassroomDto> {
         return service.findAllClassroomByCourseId(courseId, page, size)
+    }
+
+    @GetMapping("classroom/all/by-program/{programId}")
+    fun findAllClassroomByProgramId(
+        @PathVariable programId: Int,
+        @RequestParam(defaultValue = "0") page: Int,
+        @RequestParam(defaultValue = "10") size: Int
+    ): Page<ClassroomDto> {
+        return service.findAllClassroomByProgramId(programId, page, size)
     }
 
     @PostMapping("curriculum")

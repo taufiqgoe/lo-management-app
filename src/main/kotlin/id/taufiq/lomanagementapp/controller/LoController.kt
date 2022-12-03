@@ -6,6 +6,7 @@ import id.taufiq.lomanagementapp.dto.lo.PloCloDto
 import id.taufiq.lomanagementapp.dto.lo.ProgramLearningOutcomeDto
 import id.taufiq.lomanagementapp.dto.op.LoScoreDto
 import id.taufiq.lomanagementapp.service.LoService
+import org.springframework.data.domain.Page
 import org.springframework.web.bind.annotation.*
 
 @RestController
@@ -95,8 +96,12 @@ class LoController(
     }
 
     @DeleteMapping("plo-clo/all/by-course/{courseId}")
-    fun findAllPloCloByCourseId(@PathVariable courseId: Int): List<PloCloDto> {
-        return service.findAllPloCloByCourseId(courseId)
+    fun findAllPloCloByCourseId(
+        @PathVariable courseId: Int,
+        @RequestParam(defaultValue = "0") page: Int,
+        @RequestParam(defaultValue = "10") size: Int
+    ): Page<PloCloDto> {
+        return service.findAllPloCloByCourseId(courseId, page, size)
     }
 
     @PostMapping("assessment-clo")
@@ -117,6 +122,15 @@ class LoController(
     @DeleteMapping("assessment-clo/{assessmentCLoId}")
     fun deleteAssessmentClo(@PathVariable assessmentCLoId: Int) {
         service.deleteAssessmentClo(assessmentCLoId)
+    }
+
+    @GetMapping("assessment-clo/all/by-assessment/{assessmentId}")
+    fun findAllAssessmentCLoByAssessmentId(
+        @PathVariable assessmentId: Int,
+        @RequestParam(defaultValue = "0") page: Int,
+        @RequestParam(defaultValue = "10") size: Int
+    ): Page<AssessmentCloDto> {
+        return service.findAllAssessmentCLoByAssessmentId(assessmentId, page, size)
     }
 
 }

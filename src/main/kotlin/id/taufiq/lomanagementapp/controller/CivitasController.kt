@@ -3,6 +3,7 @@ package id.taufiq.lomanagementapp.controller
 import id.taufiq.lomanagementapp.dto.civitas.*
 import id.taufiq.lomanagementapp.model.jointable.StudentClassroom
 import id.taufiq.lomanagementapp.service.CivitasService
+import org.springframework.data.domain.Page
 import org.springframework.web.bind.annotation.*
 
 @RestController
@@ -71,6 +72,24 @@ class CivitasController(
         service.deleteStudentClassroom(studentClassroomId)
     }
 
+    @GetMapping("student-classroom/all/by-student/{studentId}")
+    fun findAllStudentClassroomByStudentId(
+        @PathVariable studentId: String,
+        @RequestParam(defaultValue = "0") page: Int,
+        @RequestParam(defaultValue = "10") size: Int
+    ): Page<StudentClassroomDto> {
+        return service.findAllStudentClassroomByStudentId(studentId, page, size)
+    }
+
+    @GetMapping("student-classroom/all/by-classroom/{classroomId}")
+    fun findAllStudentClassroomByClassroomId(
+        @PathVariable classroomId: Int,
+        @RequestParam(defaultValue = "0") page: Int,
+        @RequestParam(defaultValue = "10") size: Int
+    ): Page<StudentClassroomDto> {
+        return service.findAllStudentClassroomByClassroomId(classroomId, page, size)
+    }
+
     @PostMapping("lecturer-classroom")
     fun createLecturerClassroom(@RequestBody lecturerClassroomDto: LecturerClassroomDto): LecturerClassroomDto {
         return service.createLecturerClassroom(lecturerClassroomDto)
@@ -89,6 +108,24 @@ class CivitasController(
     @DeleteMapping("lecturer-classroom/{lecturerClassroomId}")
     fun deleteLecturerClassroom(@PathVariable lecturerClassroomId: Int) {
         service.deleteLecturerClassroom(lecturerClassroomId)
+    }
+
+    @GetMapping("lecturer-classroom/all/by-lecturer/{lecturerId}")
+    fun findAllLecturerClassroomByLecturerId(
+        @PathVariable lecturerId: String,
+        @RequestParam(defaultValue = "0") page: Int,
+        @RequestParam(defaultValue = "10") size: Int
+    ): Page<LecturerClassroomDto> {
+        return service.findAllLecturerClassroomByLecturerId(lecturerId, page, size)
+    }
+
+    @GetMapping("lecturer-classroom/all/by-classroom/{classroomId}")
+    fun findAllLecturerClassroomsByClassroomId(
+        @PathVariable classroomId: Int,
+        @RequestParam(defaultValue = "0") page: Int,
+        @RequestParam(defaultValue = "10") size: Int
+    ): Page<LecturerClassroomDto> {
+        return service.findAllLecturerClassroomsByClassroomId(classroomId, page, size)
     }
 
     @PostMapping("assignment")

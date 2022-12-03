@@ -13,6 +13,8 @@ import id.taufiq.lomanagementapp.model.jointable.PloClo
 import id.taufiq.lomanagementapp.repository.*
 import jakarta.transaction.Transactional
 import org.modelmapper.ModelMapper
+import org.springframework.data.domain.Page
+import org.springframework.data.domain.PageRequest
 import org.springframework.stereotype.Service
 
 @Service
@@ -105,6 +107,7 @@ class LoService(
         return LoScoreDto(clo, averageScore)
     }
 
+    @Transactional
     fun findCourseCloAverageScore(courseId: Int): List<LoScoreDto<CourseLearningOutcomeDto>> {
         val clos = courseLearningOutcomeRepository.findByCourseId(courseId)
 
@@ -143,8 +146,8 @@ class LoService(
         ploCloRepository.deleteById(ploCloId)
     }
 
-    fun findAllPloCloByCourseId(courseId: Int): List<PloCloDto> {
-        val ploCloes = ploCloRepository.findByCourseLearningOutcomeCourseId(courseId)
+    fun findAllPloCloByCourseId(courseId: Int, page: Int, size: Int): Page<PloCloDto> {
+        val ploCloes = ploCloRepository.findByCourseLearningOutcomeCourseId(courseId, PageRequest.of(page, size))
         return ploCloes.map { mapper.map(it, PloCloDto::class.java) }
     }
 
@@ -168,6 +171,11 @@ class LoService(
 
     fun deleteAssessmentClo(assessmentCLoId: Int) {
         assessmentCloRepository.deleteById(assessmentCLoId)
+    }
+
+    fun findAllAssessmentCLoByAssessmentId(assessmentId: Int, page: Int, size: Int): Page<AssessmentCloDto> {
+        val assessmentClos = assessmentCloRepository.findByAssessmentId(assessmentId, PageRequest.of(page, size))
+        return assessmentClos.map { mapper.map(it, AssessmentCloDto::class.java) }
     }
 
     //

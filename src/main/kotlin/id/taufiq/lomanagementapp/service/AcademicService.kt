@@ -96,7 +96,7 @@ class AcademicService(
         courseRepository.deleteById(courseId)
     }
 
-    fun findAllCourseByProgramId(programId: Int, page: Int, size: Int): List<CourseDto> {
+    fun findAllCourseByProgramId(programId: Int, page: Int, size: Int): Page<CourseDto> {
         val courses = courseRepository.findByProgramId(programId, PageRequest.of(page, size))
         return courses.map { mapper.map(it, CourseDto::class.java) }
     }
@@ -123,8 +123,13 @@ class AcademicService(
         classroomRepository.deleteById(classroomId)
     }
 
-    fun findAllClassroomByCourseId(courseId: Int, page: Int, size: Int): List<ClassroomDto> {
+    fun findAllClassroomByCourseId(courseId: Int, page: Int, size: Int): Page<ClassroomDto> {
         val classrooms = classroomRepository.findByCourseId(courseId, PageRequest.of(page, size))
+        return classrooms.map { mapper.map(it, ClassroomDto::class.java) }
+    }
+
+    fun findAllClassroomByProgramId(programId: Int, page: Int, size: Int): Page<ClassroomDto> {
+        val classrooms = classroomRepository.findByCourseProgramId(programId, PageRequest.of(page, size))
         return classrooms.map { mapper.map(it, ClassroomDto::class.java) }
     }
 

@@ -50,17 +50,19 @@ class UserService(
 
     @PostConstruct
     fun init() {
-        val superuserRole = roleRepository.save(Role(null, "SU"))
-        userRepository.save(
-            User(
-                id = null,
-                username = "SU",
-                password = passwordEncoder.encode("SU"),
-                email = "su@app.com",
-                isEnabled = true,
-                roles = listOf(superuserRole).toMutableList()
+        if (roleRepository.count() < 1) {
+            val superuserRole = roleRepository.save(Role(null, "SU"))
+            userRepository.save(
+                User(
+                    id = null,
+                    username = "SU",
+                    password = passwordEncoder.encode("SU"),
+                    email = "su@app.com",
+                    isEnabled = true,
+                    roles = listOf(superuserRole).toMutableList()
+                )
             )
-        )
+        }
     }
 
 }

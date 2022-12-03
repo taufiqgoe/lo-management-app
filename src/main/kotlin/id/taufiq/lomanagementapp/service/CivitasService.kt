@@ -9,6 +9,8 @@ import id.taufiq.lomanagementapp.model.jointable.LecturerClassroom
 import id.taufiq.lomanagementapp.model.jointable.StudentClassroom
 import id.taufiq.lomanagementapp.repository.*
 import org.modelmapper.ModelMapper
+import org.springframework.data.domain.Page
+import org.springframework.data.domain.PageRequest
 import org.springframework.stereotype.Service
 
 @Service
@@ -85,6 +87,17 @@ class CivitasService(
         studentClassroomRepository.deleteById(studentClassroomId)
     }
 
+    fun findAllStudentClassroomByStudentId(studentId: String, page: Int, size: Int): Page<StudentClassroomDto> {
+        val studentClassrooms =
+            studentClassroomRepository.findByStudentIdIgnoreCase(studentId, PageRequest.of(page, size))
+        return studentClassrooms.map { mapper.map(it, StudentClassroomDto::class.java) }
+    }
+
+    fun findAllStudentClassroomByClassroomId(classroomId: Int, page: Int, size: Int): Page<StudentClassroomDto> {
+        val studentClassroom = studentClassroomRepository.findByClassroomId(classroomId, PageRequest.of(page, size))
+        return studentClassroom.map { mapper.map(it, StudentClassroomDto::class.java) }
+    }
+
     //
     // LECTURER CLASSROOM
 
@@ -105,6 +118,17 @@ class CivitasService(
 
     fun deleteLecturerClassroom(lecturerClassroomId: Int) {
         lecturerClassroomRepository.deleteById(lecturerClassroomId)
+    }
+
+    fun findAllLecturerClassroomByLecturerId(lecturerId: String, page: Int, size: Int): Page<LecturerClassroomDto> {
+        val lecturerClassrooms =
+            lecturerClassroomRepository.findByLecturerIdIgnoreCase(lecturerId, PageRequest.of(page, size))
+        return lecturerClassrooms.map { mapper.map(it, LecturerClassroomDto::class.java) }
+    }
+
+    fun findAllLecturerClassroomsByClassroomId(classroomId: Int, page: Int, size: Int): Page<LecturerClassroomDto> {
+        val lecturerClassrooms = lecturerClassroomRepository.findByClassroomId(classroomId, PageRequest.of(page, size))
+        return lecturerClassrooms.map { mapper.map(it, LecturerClassroomDto::class.java) }
     }
 
     //
